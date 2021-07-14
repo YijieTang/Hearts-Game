@@ -6,10 +6,10 @@ const logger = require("morgan");
 const expressValidator = require("express-validator");
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const https = require('https');
+const fs = require('fs');
 
-if (process.env.NODE_ENV === "development") {
-  require("dotenv").config();
-}
+require("dotenv").config();
 
 const passport = require("./config/passport");
 const indexRouter = require("./routes/index");
@@ -65,4 +65,13 @@ app.use(function(err, req, res, next) {
   res.render("error");
 });
 
+var credentials = {
+  cert: fs.readFileSync('cert.pem', 'utf8'), 
+  key: fs.readFileSync('privkey.pem', 'utf8')
+};
+
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(3443);
+
 module.exports = app;
+
