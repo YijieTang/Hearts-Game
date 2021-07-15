@@ -505,7 +505,15 @@ function buttonDisableLogic() {
     }
   }
 
-  //Case: you're the leading suit
+  let hasNonHeart = false;
+  for (let i = 0; i < playersCards.length; i++) {
+    if (Math.floor((playersCards[i].card_id - 1) / 13) != 2) {
+      hasNonHeart = true;
+      break;
+    }
+  }
+
+  // you're the leading player in this round
   if (leadCard == 0) {
     let brokenHearts =
       parseInt(bottomPlayer.current_round_score % 13) +
@@ -514,14 +522,6 @@ function buttonDisableLogic() {
       brokenHearts +=
         parseInt(leftPlayer.current_round_score % 13) +
         parseInt(rightPlayer.current_round_score % 13);
-    }
-
-    let hasNonHeart = false;
-    for (let i = 0; i < playersCards.length; i++) {
-      if (Math.floor((playersCards[i].card_id - 1) / 13) != 2) {
-        hasNonHeart = true;
-        break;
-      }
     }
 
     if (brokenHearts == 0 && selectedSuit == 2 && hasNonHeart) {
@@ -533,6 +533,22 @@ function buttonDisableLogic() {
       btn.disabled = false;
     }
     return;
+  }
+
+  // you are not the leading play
+  // first round cannot play spade Q
+  // first round cannot play hearts except no other choice
+  if (bottomPlayer.card_count == 13) {
+    if (selectedCard == 51) {
+      alertBox.innerHTML = "<p> The queen of spades cannot be played at the first round.</p>";
+      btn.disabled = true;
+      return;
+    }
+    if (selectedSuit == 2 && hasNonHeart) {
+      alertBox.innerHTML = "<p> The hearts cannot be played at the first round if there are other options.</p>";
+      btn.disabled = true;
+      return;
+    }
   }
 
   let leadSuit = Math.floor((leadCard - 1) / 13);
