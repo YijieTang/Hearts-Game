@@ -16,6 +16,7 @@ let selectedSingleCard = "0";
 let selectedMultiple = ["0", "0", "0"];
 let validPass = false;
 let gameOver = false;
+let gameRound = 1;
 
 gameSocket.on("LOAD PLAYERS", data => {
   playerNames = data.game_players;
@@ -107,6 +108,7 @@ gameSocket.on("SEND PLAYER HAND", data => {
 });
 
 gameSocket.on("GAME OVER", data => {
+  gameRound = 1;
   gameOver = true;
   const board = document.getElementsByClassName("game-box")[0];
 
@@ -239,8 +241,16 @@ function updateGameBoard() {
     buttonString = 'onclick="selectMultipleCard(this.id)"';
     gameHtml +=
       '<button class="game-button btn btn-primary " id="multiple-button" onclick="passButton()" disabled>Pass cards</button>';
+    let passDir;
+    if (gameRound % 4 == 1) {
+      passDir = 'left';
+    } else if (gameRound % 4 == 2) {
+      passDir = 'right';
+    } else if (gameRound % 4 == 3) {
+      passDir = 'across'
+    }
     gameHtml +=
-      '<div class = "alert-box"><p>Select three cards to pass.</p></div>';
+      `<div class = "alert-box"><p>Select three cards to pass. Game round: ${gameRound}. Pass direction: ${passDir}</p></div>`;
   } else if (!observer) {
     buttonString = "";
     gameHtml +=
@@ -588,6 +598,8 @@ function selectMultipleCard(id) {
 }
 
 function passButton() {
+  gameRound += 1;
+
   // send three cards to server
   gameSocket.emit("PASS CARDS", {
     user_id: user_id,
