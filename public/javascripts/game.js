@@ -424,7 +424,7 @@ function resetCard(id) {
 function selectSingleCard(id) {
   const alertBox = document.getElementsByClassName("alert-box")[0];
 
-  if (selectedSingle != "0") {
+  if (selectedSingleCard != "0") {
     if (selectedSingleCard == id) {
       resetCard(selectedSingleCard);
       selectedSingleCard = "0";
@@ -498,18 +498,19 @@ function buttonDisableLogic() {
   //Case: you're the leading suit
   if (leadCard == 0) {
     let brokenHearts =
-      parseInt(bottomPlayer.current_round_score) +
-      parseInt(topPlayer.current_round_score);
+      parseInt(bottomPlayer.current_round_score % 13) +
+      parseInt(topPlayer.current_round_score % 13);
     if (numPlayers == 4) {
       brokenHearts +=
-        parseInt(leftPlayer.current_round_score) +
-        parseInt(rightPlayer.current_round_score);
+        parseInt(leftPlayer.current_round_score % 13) +
+        parseInt(rightPlayer.current_round_score % 13);
     }
 
     let hasNonHeart = false;
     for (let i = 0; i < playersCards.length; i++) {
-      if (Math.floor((playersCards[i].card_id - 1) / 13) == 2) {
+      if (Math.floor((playersCards[i].card_id - 1) / 13) != 2) {
         hasNonHeart = true;
+        break;
       }
     }
 
