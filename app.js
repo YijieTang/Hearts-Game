@@ -12,14 +12,23 @@ const fs = require('fs');
 require("dotenv").config();
 
 const passport = require("./config/passport");
+
+const app = express();
+var credentials = {
+  cert: fs.readFileSync('cert.pem', 'utf8'),
+  key: fs.readFileSync('privkey.pem', 'utf8')
+};
+
+var httpsServer = https.createServer(credentials, app);
+var io = require("./sockets").initialize(httpsServer);
+httpsServer.listen(3443);
+
 const indexRouter = require("./routes/index");
 const testsRouter = require("./routes/tests");
 const { router: gameRouter } = require("./routes/game");
 const registrationRouter = require("./routes/registration");
 const lobbyRouter = require("./routes/lobby");
 const leaveGameRouter = require("./routes/leaveGame");
-
-const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -65,13 +74,6 @@ app.use(function(err, req, res, next) {
   res.render("error");
 });
 
-var credentials = {
-  cert: fs.readFileSync('cert.pem', 'utf8'), 
-  key: fs.readFileSync('privkey.pem', 'utf8')
-};
-
-var httpsServer = https.createServer(credentials, app);
-httpsServer.listen(3443);
 
 module.exports = app;
 

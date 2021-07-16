@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Game = require("../db/game");
+const io = require("../sockets").io();
 const gameSocket = io.of("/game");
 const { update } = require("./game");
 

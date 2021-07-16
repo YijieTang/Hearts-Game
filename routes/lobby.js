@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const io = require("../sockets");
+const io = require("../sockets").io();
 const Game = require("../db/game");
 const lobbySocket = io.of("/lobby");
 const isAuthenticated = require("../config/passport/isAuthenticated");
