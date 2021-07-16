@@ -176,6 +176,10 @@ gameSocket.on("connection", socket => {
       gameSocket.emit("CANCEL NUDGE", nudge_timer);
     }
 
+    if (card_played == 51) {
+      gameSocket.emit("PLAY DONG");
+    }
+
     Game.getGamePlayers(game_id).then(gamePlayers => {
       Game.getTurnSequenceForPlayer(user_id, game_id).then(turnQuery => {
         let turnSequence = turnQuery[0].turn_sequence;
