@@ -179,6 +179,15 @@ gameSocket.on("connection", socket => {
     if (card_played == 51) {
       gameSocket.emit("PLAY DONG");
     }
+    
+    var card_suit = Math.floor((card_played - 1) / 13);
+    if (card_suit == 2) {
+      Game.getRemainingHearts(game_id).then(heartsNumber => {
+        if (heartsNumber.count == 13) {
+          gameSocket.emit("PLAY KACA");
+        }
+      })
+    }
 
     Game.getGamePlayers(game_id).then(gamePlayers => {
       Game.getTurnSequenceForPlayer(user_id, game_id).then(turnQuery => {

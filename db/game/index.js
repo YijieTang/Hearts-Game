@@ -52,7 +52,8 @@ const {
   TOTAL_POINTS_QUERY,
   GET_MAX_SCORE_QUERY,
   RESET_POINTS_QUERY,
-  VERIFY_PLAYER_QUERY
+  VERIFY_PLAYER_QUERY,
+  REMAINING_HEARTS_QUERY
 } = require("./queries");
 
 const createGame = (max_players, user_id, game_name) => {
@@ -466,6 +467,10 @@ const resetRoundScore = game_id => {
   return db.none(RESET_POINTS_QUERY, [game_id]);
 };
 
+const getRemainingHearts = game_id => {
+  return db.one(REMAINING_HEARTS_QUERY, [game_id]);
+};
+
 module.exports = {
   createGame,
   createInitialGamePlayer,
@@ -512,5 +517,6 @@ module.exports = {
   getHandSize,
   getMaximumScore,
   checkGameExists,
-  isGamePlayer
+  isGamePlayer,
+  getRemainingHearts
 };

@@ -38,6 +38,14 @@ msg.addEventListener("keypress", events => {
   }
 });
 
+chatSocket.on("PLAY DONG", () => {
+  new Audio('../../Dong.mp3').play();
+});
+
+chatSocket.on("PLAY KACA", () => {
+  new Audio('../../Kaca.mp3').play();
+})
+
 // Listen for events
 chatSocket.on("send msg", data => {
   const { room_id, handle, message } = data;

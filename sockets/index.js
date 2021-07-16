@@ -14,6 +14,12 @@ exports.initialize = function (server) {
 
     socket.on("chat", data => {
       io.emit("send msg", data);
+      if (data.message.toLowerCase().includes("dong")) {
+        io.emit("PLAY DONG");
+      }
+      if (data.message.toLowerCase().includes("kaca")) {
+        io.emit("PLAY KACA");
+      }
     });
 
     socket.on("NUDGE NOTIFICATION", data => {

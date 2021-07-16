@@ -181,6 +181,9 @@ const VERIFY_PLAYER_QUERY =
 const RESET_POINTS_QUERY =
   "UPDATE game_players SET current_round_score = 0 WHERE game_id = $1";
 
+const REMAINING_HEARTS_QUERY =
+  "select count(*) from user_game_cards where game_id = $1 and (card_id - 1) / 13 = 2 and user_id is not null"
+
 module.exports = {
   CREATE_GAME_QUERY,
   CREATE_GAME_PLAYER_QUERY,
@@ -232,5 +235,6 @@ module.exports = {
   TOTAL_POINTS_QUERY,
   GET_MAX_SCORE_QUERY,
   VERIFY_PLAYER_QUERY,
-  RESET_POINTS_QUERY
+  RESET_POINTS_QUERY,
+  REMAINING_HEARTS_QUERY
 };

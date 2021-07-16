@@ -22,6 +22,10 @@ gameSocket.on("PLAY DONG", () => {
   new Audio('../../Dong.mp3').play();
 });
 
+gameSocket.on("PLAY KACA", () => {
+  new Audio('../../Kaca.mp3').play();
+})
+
 gameSocket.on("LOAD PLAYERS", data => {
   playerNames = data.game_players;
 
@@ -518,8 +522,9 @@ function buttonDisableLogic() {
   }
 
   // you're the leading player in this round
+  var brokenHearts = 0;
   if (leadCard == 0) {
-    let brokenHearts =
+    brokenHearts +=
       parseInt(bottomPlayer.current_round_score % 13) +
       parseInt(topPlayer.current_round_score % 13);
     if (numPlayers == 4) {
