@@ -108,6 +108,13 @@ gameSocket.on("VALID PASS", data => {
 });
 
 gameSocket.on("SEND PLAYER HAND", data => {
+  // highlight the cards just passed from other players
+  var additionalCards = [];
+  if (playersCards != null) {
+    const prevCards = playersCards.map(cardObj => cardObj.card_id);
+    additionalCards = data.player_hand.filter(cardObj => !prevCards.includes(cardObj.card_id));
+  }
+
   playersCards = data.player_hand;
   // sort the cards in conventional order
   playersCards.sort((card1, card2) => {
@@ -128,6 +135,7 @@ gameSocket.on("SEND PLAYER HAND", data => {
   });
 
   updateGameBoard();
+  additionalCards.map(cardObj => selectCard(cardObj.card_id));
 });
 
 gameSocket.on("GAME OVER", data => {
