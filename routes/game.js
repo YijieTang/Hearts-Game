@@ -177,14 +177,14 @@ gameSocket.on("connection", socket => {
     }
 
     if (card_played == 51) {
-      gameSocket.emit("PLAY DONG");
+      gameSocket.emit("PLAY SOUND", {file: "Dong.mp3"});
     }
     
     var card_suit = Math.floor((card_played - 1) / 13);
     if (card_suit == 2) {
       Game.getRemainingHearts(game_id).then(heartsNumber => {
         if (heartsNumber.count == 13) {
-          gameSocket.emit("PLAY KACA");
+          gameSocket.emit("PLAY SOUND", {file: "Kaca.mp3"});
         }
       })
     }

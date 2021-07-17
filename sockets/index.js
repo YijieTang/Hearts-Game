@@ -15,10 +15,10 @@ exports.initialize = function (server) {
     socket.on("chat", data => {
       io.emit("send msg", data);
       if (data.message.toLowerCase().includes("dong")) {
-        io.emit("PLAY DONG");
+        io.emit("PLAY SOUND", {file: "Dong.mp3"});
       }
       if (data.message.toLowerCase().includes("kaca")) {
-        io.emit("PLAY KACA");
+        io.emit("PLAY SOUND", {file: "Kaca.mp3"});
       }
     });
 

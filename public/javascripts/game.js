@@ -18,13 +18,11 @@ let validPass = false;
 let gameOver = false;
 let gameRound = 1;
 
-gameSocket.on("PLAY DONG", () => {
-  new Audio('../../Dong.mp3').play();
+gameSocket.on("PLAY SOUND", data => {
+  if (data.file != null) {
+    new Audio('../../' + data.file).play();
+  }
 });
-
-gameSocket.on("PLAY KACA", () => {
-  new Audio('../../Kaca.mp3').play();
-})
 
 gameSocket.on("LOAD PLAYERS", data => {
   playerNames = data.game_players;
