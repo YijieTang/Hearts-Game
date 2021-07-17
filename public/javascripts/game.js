@@ -570,7 +570,7 @@ function buttonDisableLogic() {
   // you are not the leading play
   // first round cannot play spade Q
   // first round cannot play hearts except no other choice
-  if (bottomPlayer.card_count == 13) {
+  if (bottomPlayer.card_count == 52 / numPlayers) {
     if (selectedCard == 51) {
       alertBox.innerHTML = "<p> The queen of spades cannot be played at the first round.</p>";
       btn.disabled = true;
