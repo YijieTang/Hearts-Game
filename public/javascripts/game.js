@@ -109,6 +109,23 @@ gameSocket.on("VALID PASS", data => {
 
 gameSocket.on("SEND PLAYER HAND", data => {
   playersCards = data.player_hand;
+  // sort the cards in conventional order
+  playersCards.sort((card1, card2) => {
+    var n1 = card1.card_id;
+    var n2 = card2.card_id;
+    var suit1 = Math.floor((n1 - 1) / 13);
+    var suit2 = Math.floor((n2 - 1) / 13);
+    if (suit1 == 2) suit1 += 4; // make hearts show right
+    if (suit2 == 2) suit2 += 4; // make hearts show right
+    var value1 = (n1 - 1) % 13;
+    var value2 = (n2 - 1) % 13;
+    if (suit1 != suit2) {
+      return suit1 < suit2 ? -1 : 1;
+    }
+    if (value1 == 0) value1 += 13; // make ace show right to king
+    if (value2 == 0) value2 += 13; // make ace show right to king
+    return value1 < value2 ? -1 : 1;
+  });
 
   updateGameBoard();
 });
