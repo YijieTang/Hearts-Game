@@ -42,6 +42,9 @@ chatSocket.on("PLAY SOUND", data => {
   if (data.file != null) {
     new Audio('../../' + data.file).play();
   }
+  if (data.url != null) {
+    new Audio(data.url).play();
+  }
 });
 
 // Listen for events

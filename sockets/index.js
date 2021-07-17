@@ -14,11 +14,15 @@ exports.initialize = function (server) {
 
     socket.on("chat", data => {
       io.emit("send msg", data);
-      if (data.message.toLowerCase().includes("dong")) {
-        io.emit("PLAY SOUND", {file: "Dong.mp3"});
-      }
-      if (data.message.toLowerCase().includes("kaca")) {
-        io.emit("PLAY SOUND", {file: "Kaca.mp3"});
+      if (data.message.startsWith("http")) {
+        io.emit("PLAY SOUND", {url: data.message})
+      } else {
+          if (data.message.toLowerCase().includes("dong")) {
+            io.emit("PLAY SOUND", {file: "Dong.mp3"});
+          }
+          if (data.message.toLowerCase().includes("kaca")) {
+            io.emit("PLAY SOUND", {file: "Kaca.mp3"});
+          }
       }
     });
 
