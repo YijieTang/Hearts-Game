@@ -1,3 +1,25 @@
+# Operational notes
+- Change pg-promise version to make database connection functional
+- Add SSL support for the Express.js app
+- Copy the SSL files cert.pem and privkey.pem to this directory
+- Start PostgreSQL container [docker-cmd.sh](docker-cmd.sh)
+- Perform database migration [migratedb.sh](migratedb.sh)
+- Start the game by `pm2 start app.js` to run the game at port 3443
+- Use apache2 to redirect to port 443
+- Deployed the game at [https://hearts.yijietang.dev](https://hearts.yijietang.dev)
+
+# Game feature notes
+- Fix the broken hearts logic
+- Add the "no-score-at-first-round" rule
+- Show ace to the right of king to reflect card order
+- Show hearts to the right of spades to separate from diamond
+- Play sound for queen of spades and hearts broken
+- Highlight the cards passed from other players
+- Indicate the card pass direction and round number
+
+------------------------------------
+
+# README file from the original authors
 # Hearts Game
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
 
