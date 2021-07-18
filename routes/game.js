@@ -345,11 +345,15 @@ const update = game_id => {
     }
     setTimeout(() => {
       return Game.getCurrentTurn(game_id).then(turn_information => {
-        gameSocket.to(game_id).emit("UPDATE", {
-          shared_player_information: shared_player_information,
-          turn_information: turn_information
+        Game.getCurrentRoundNumber(game_id).then(result => {
+          const round_number = result[0].round_number;
+          gameSocket.to(game_id).emit("UPDATE", {
+            shared_player_information: shared_player_information,
+            turn_information: turn_information,
+            round_number: round_number
+          });
+          return Promise.resolve(shared_player_information);
         });
-        return Promise.resolve(shared_player_information);
       });
     }, 100);
   });

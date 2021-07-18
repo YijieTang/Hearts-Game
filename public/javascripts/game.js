@@ -55,6 +55,8 @@ gameSocket.on("LOAD PLAYERS", data => {
 });
 
 gameSocket.on("UPDATE", data => {
+  gameRound = data.round_number;
+
   try {
     clearTimeout(timer);
   } catch (e) {}
